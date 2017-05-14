@@ -1,4 +1,5 @@
-import React, {Component} from 'react'
+import * as React from 'react'
+import {Component} from 'react'
 
 
 const audio = new Audio();
@@ -7,7 +8,7 @@ audio.preload = 'none';
 audio.volume = 0.1;
 
 
-export class Player extends Component {
+export class Player extends Component<any, any> {
     constructor(props) {
         super(props);
 
@@ -16,7 +17,7 @@ export class Player extends Component {
         };
     }
 
-    updateIsPlaying(event) {
+    updateIsPlaying(event?) {
         if (event) console.log(event.type, audio);
 
         this.setState((state, props) => {
@@ -46,6 +47,8 @@ export class Player extends Component {
                 (event) => audio.removeEventListener(event, update)
             );
     }
+
+    componentWillUnmount: () => void
 
     toggle() {
         if (this.state.isPlaying) {

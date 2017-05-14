@@ -1,6 +1,6 @@
-import React from 'react'
+import * as React from 'react'
 
-import {Track} from './Track.js'
+import {Track} from './Track'
 
 export function TrackList(props) {
     const tracks = props.tracks.map(

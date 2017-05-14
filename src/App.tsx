@@ -1,9 +1,10 @@
-import React, { Component } from 'react';
+import * as React from 'react';
+import { Component } from 'react';
 
 import {TrackList} from './spotify/TrackList'
 import {search} from './spotify/api'
 
-class App extends Component {
+class App extends Component<any, any> {
   constructor(props) {
     super(props);
 
