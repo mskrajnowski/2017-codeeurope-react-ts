@@ -1,8 +1,13 @@
 import * as React from 'react';
 
 import {Player} from './Player';
+import {TrackData} from './api';
 
-export function Track(props) {
+export interface TrackProps {
+    data: TrackData;
+}
+
+export function Track(props: TrackProps) {
     return (
         <div>
             {props.data.name} 

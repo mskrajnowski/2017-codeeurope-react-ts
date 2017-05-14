@@ -1,25 +1,33 @@
-import * as React from 'react'
-import {Component} from 'react'
-
+import * as React from 'react';
+import {Component} from 'react';
 
 const audio = new Audio();
 audio.autoplay = false;
 audio.preload = 'none';
 audio.volume = 0.1;
 
+export interface PlayerProps {
+    src: string;
+}
 
-export class Player extends Component<any, any> {
-    constructor(props) {
+export interface PlayerState {
+    isPlaying: boolean;
+}
+
+export class Player extends Component<PlayerProps, PlayerState> {
+    componentWillUnmount: () => void;
+
+    constructor(props: PlayerProps) {
         super(props);
 
         this.state = {
             isPlaying: false,
         };
+
+        this.toggle = this.toggle.bind(this);
     }
 
-    updateIsPlaying(event?) {
-        if (event) console.log(event.type, audio);
-
+    updateIsPlaying() {
         this.setState((state, props) => {
             const isPlaying = 
                 !audio.paused && 
@@ -48,8 +56,6 @@ export class Player extends Component<any, any> {
             );
     }
 
-    componentWillUnmount: () => void
-
     toggle() {
         if (this.state.isPlaying) {
             audio.pause();
@@ -64,7 +70,7 @@ export class Player extends Component<any, any> {
         return (
             <button 
                 type="button"
-                onClick={this.toggle.bind(this)}
+                onClick={this.toggle}
             >
                 {this.state.isPlaying ? 'stop' : 'play'}
             </button>

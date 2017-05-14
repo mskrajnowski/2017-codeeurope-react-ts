@@ -1,30 +1,39 @@
 import * as React from 'react';
 import { Component } from 'react';
 
-import {TrackList} from './spotify/TrackList'
-import {search} from './spotify/api'
+import {TrackList} from './spotify/TrackList';
+import {search, TrackData} from './spotify/api';
 
-class App extends Component<any, any> {
-  constructor(props) {
+interface AppProps {}
+
+interface AppState {
+  query: string;
+  results: TrackData[];
+}
+
+class App extends Component<AppProps, AppState> {
+  constructor(props: AppProps) {
     super(props);
 
     this.state = {
       query: '',
       results: [],
     };
+
+    this.queryChanged = this.queryChanged.bind(this);
   }
 
   componentDidMount() {
     this.updateResults(this.state.query);
   }
 
-  queryChanged(event) {
+  queryChanged(event: React.ChangeEvent<HTMLInputElement>) {
     const query = event.target.value;
     this.setState({query});
     this.updateResults(query);
   }
 
-  async updateResults(query) {
+  async updateResults(query: string) {
     if (query) {
       const data = await search(query);
       const results = data.tracks.items;
@@ -45,7 +54,7 @@ class App extends Component<any, any> {
             type="text" 
             placeholder="Search" 
             value={this.state.query}
-            onChange={this.queryChanged.bind(this)}
+            onChange={this.queryChanged}
           />
         </header>
         <TrackList tracks={this.state.results}/>
